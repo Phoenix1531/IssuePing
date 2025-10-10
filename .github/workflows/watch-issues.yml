@@ -1,0 +1,41 @@
+name: IssuePing Watch
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch: {}
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Restore cache
+        uses: actions/cache@v4
+        with:
+          path: .issueping_cache
+          key: issueping-cache-${{ runner.os }}-py3.11
+          restore-keys: |
+            issueping-cache-
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Run IssuePing
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
+          EMAIL_TO: ${{ secrets.EMAIL_TO }}
+          EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
+        run: python -m issueping
+      - name: Save cache
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: .issueping_cache
+          key: issueping-cache-${{ runner.os }}-py3.11-${{ github.run_id }}
+
+
