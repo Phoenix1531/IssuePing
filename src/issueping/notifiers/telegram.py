@@ -40,6 +40,6 @@ def send_telegram(issue: Dict, image_url: str | None = None) -> None:
         }
 
     resp = requests.post(url, json=payload, timeout=30)
-resp.raise_for_status()
+    resp.raise_for_status()
 
 
