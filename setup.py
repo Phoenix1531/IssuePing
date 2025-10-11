@@ -9,6 +9,7 @@ setup(
     install_requires=[
         "requests>=2.32.0",
         "sendgrid>=6.11.0",
+        "python-dotenv>=1.0.1",
     ],
     entry_points={
         "console_scripts": [
