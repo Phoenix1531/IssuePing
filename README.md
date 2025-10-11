@@ -10,7 +10,7 @@ For many developers, especially beginners, contributing to open source is exciti
 
 This project was born from the same struggle. As students and new contributors, we wanted to help but found ourselves chasing issues instead of solving them. The idea was simple: what if there was a way to **bring the issues to you**, instead of you chasing them? A tool that works quietly in the background, filters issues by your preferences, and instantly notifies you when something relevant appears.
 
-We wanted to design something minimal, something that could be set up in minutes, without the complexity of running servers or managing heavy infrastructure. GitHub Actions gave us the perfect platform: free, reliable, and already familiar to developers.
+I wanted to design something minimal, something that could be set up in minutes, without the complexity of running servers or managing heavy infrastructure. GitHub Actions gave me the perfect platform: free, reliable, and already familiar to developers.
 
 ## How IssuePing Helps
 
@@ -45,7 +45,7 @@ Go to your forked repo → **Settings** → **Secrets and variables** → **Acti
 
 Add the following:
 
-* `TELEGRAM_BOT_TOKEN` (if using Telegram)
+* `TELEGRAM_BOT_TOKEN` (create new bot using @BotFather)
 * `TELEGRAM_CHAT_ID` (your chat ID)
 * `SENDGRID_API_KEY` (if using email)
 * `EMAIL_TO` (your email address)
@@ -70,7 +70,7 @@ Example:
     },
     {
       "name": "someuser/cool-project",
-      "labels": ["hacktoberfest"]
+      "labels": ["hacktoberfest","frontend"]
     }
   ]
 }
@@ -107,20 +107,52 @@ Labels: good-first-issue
 Link: https://github.com/facebook/react/issues/12345
 ```
 
-## Roadmap
+## Troubleshooting
+
+### Workflow not running automatically?
+- Make sure your repository has recent activity (make an empty commit)
+- Check if Actions are enabled in your fork
+- Verify the cron schedule is correct
+
+### Not receiving notifications?
+- Verify all secrets are correctly set
+- For Telegram: Make sure you've messaged your bot at least once
+- For SendGrid: Verify your sender email is authenticated
+- Check the workflow logs for error messages
+
+### Getting too many/few notifications?
+- Adjust the labels in `config/repos.json`
+- The tool only sends unassigned issues
+- Check if repositories have issues with your specified labels
+
+## FAQ
+
+**Q: How often does it check for new issues?**
+A: Every 10 minutes by default. You can change this in `.github/workflows/watch-issues.yml`.
+
+**Q: Will I get duplicate notifications?**
+A: No! The tool remembers which issues it has already notified you about.
+
+**Q: Does it work with private repositories?**
+A: Yes, as long as your GitHub token has access to them.
+
+**Q: Can I use both Telegram and Email?**
+A: Yes! Configure both and you'll receive notifications on both channels.
+
+**Q: What if I want to stop notifications temporarily?**
+A: Go to Actions → IssuePing Watch → "..." → "Disable workflow"
+
+## Future Roadmap
 
 * Digest mode (daily or weekly summaries)
-* Opt-in auto-comment feature
+* Opt-in auto-comment feature for github issues
 * GitHub App integration for faster real-time updates
+* AI features to get automatically get a user's skills and get them the matching issues/repos
 
 ## Contributing
 
-We welcome contributions of any kind: improvements, new features, or better docs. See `CONTRIBUTING.md` for details.
+We welcome contributions of any kind: improvements, new features.
 
 ## Security
 
 Never expose your tokens or API keys in code or logs. All secrets must be stored in GitHub Secrets.
-
-## License
-
-MIT License
