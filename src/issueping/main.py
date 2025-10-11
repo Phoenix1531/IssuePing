@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import logging
+import re
 from typing import Dict, Set
 
 from .config import load_config
@@ -44,16 +45,30 @@ def build_issue_key(repo_full_name: str, issue: Dict) -> str:
     return f"{repo_full_name}#{number}"
 
 
+IMAGE_PATTERN = re.compile(r'!\[.*?\]\((https?://[^\s)]+)\)')
+
+def extract_first_image(issue: Dict) -> str | None:
+    body = issue.get("body") or ""
+    match = IMAGE_PATTERN.search(body)
+    if match:
+        url = match.group(1)
+        if url.startswith(('http://', 'https://')) and len(url) < 2000:
+            return url
+    return None
+
+
 def notify(issue: Dict) -> None:
+    image_url = extract_first_image(issue)
     # Try both channels if configured
     if telegram_enabled():
         try:
-            send_telegram(issue)
+            send_telegram(issue, image_url=image_url)
         except Exception as exc:
             logger.warning(f"Telegram notify failed: {exc}")
+
     if sendgrid_enabled():
         try:
-            send_email(issue)
+            send_email(issue, image_url=image_url)
         except Exception as exc:
             logger.warning(f"SendGrid notify failed: {exc}")
 
