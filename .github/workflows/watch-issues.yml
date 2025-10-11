@@ -39,5 +39,3 @@ jobs:
         with:
           path: .issueping_cache
           key: issueping-cache-${{ runner.os }}-py3.11-${{ github.run_id }}
-
-

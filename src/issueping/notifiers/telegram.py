@@ -11,6 +11,7 @@ def telegram_enabled() -> bool:
 
 
 def send_telegram(issue: Dict, image_url: str | None = None) -> None:
+    """Send Telegram notification for a new issue."""
     token = os.getenv("TELEGRAM_BOT_TOKEN")
     chat_id = os.getenv("TELEGRAM_CHAT_ID")
 

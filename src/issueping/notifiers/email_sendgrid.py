@@ -11,6 +11,7 @@ def sendgrid_enabled() -> bool:
     return bool(os.getenv("SENDGRID_API_KEY") and os.getenv("EMAIL_TO") and os.getenv("EMAIL_FROM"))
 
 def send_email(issue: Dict, image_url: str | None = None) -> None:
+    """Send email notification for a new issue."""
     api_key = os.getenv("SENDGRID_API_KEY")
     email_to = os.getenv("EMAIL_TO")
     email_from = os.getenv("EMAIL_FROM")

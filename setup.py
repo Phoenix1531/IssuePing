@@ -1,5 +1,6 @@
 from setuptools import setup, find_packages
 
+
 setup(
     name="issueping",
     version="1.0.0",

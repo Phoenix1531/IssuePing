@@ -5,7 +5,7 @@
       "labels": ["good-first-issue"]
     },
     {
-      "name": "vercel/next.js", 
+      "name": "vercel/next.js",
       "labels": ["frontend", "hacktoberfest"]
     }
   ]

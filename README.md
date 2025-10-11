@@ -113,6 +113,7 @@ Link: https://github.com/facebook/react/issues/12345
 - Make sure your repository has recent activity (make an empty commit)
 - Check if Actions are enabled in your fork
 - Verify the cron schedule is correct
+- **Note**: Private repos have 2000 minutes/month Actions limit. Make your fork public for unlimited usage.
 
 ### Not receiving notifications?
 - Verify all secrets are correctly set
