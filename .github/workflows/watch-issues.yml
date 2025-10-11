@@ -21,7 +21,9 @@ jobs:
           restore-keys: |
             issueping-cache-
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: |
+          pip install -r requirements.txt
+          pip install .
       - name: Run IssuePing
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
