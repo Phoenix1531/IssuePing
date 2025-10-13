@@ -1,0 +1,29 @@
+# Virtual env
+.venv/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+src/issueping.egg-info/
+
+# Editor directories and files
+.idea/
+.vscode/
+
+# Env files and secrets
+.env
+.env.local
+
+# Logs and runtime cache
+logs/
+.issueping_cache/
+
+# OS files
+.DS_Store
+Thumbs.db
