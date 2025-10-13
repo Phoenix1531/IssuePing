@@ -5,12 +5,16 @@ from typing import Dict
 
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
+import logging
+
+
+logger = logging.getLogger("issueping.email")
 
 
 def sendgrid_enabled() -> bool:
     return bool(os.getenv("SENDGRID_API_KEY") and os.getenv("EMAIL_TO") and os.getenv("EMAIL_FROM"))
 
-def send_email(issue: Dict, image_url: str | None = None) -> None:
+def send_email(issue: Dict, image_url: str | None = None, verbose: bool = False) -> None:
     """Send email notification for a new issue."""
     api_key = os.getenv("SENDGRID_API_KEY")
     email_to = os.getenv("EMAIL_TO")
@@ -65,7 +69,16 @@ def send_email(issue: Dict, image_url: str | None = None) -> None:
 
     try:
         sg = SendGridAPIClient(api_key)
-        sg.send(message)
+        if verbose:
+            logger.info("[sendgrid] sending message")
+        response = sg.send(message)
+        if verbose:
+            logger.info(f"[sendgrid] status_code={getattr(response, 'status_code', None)}")
+            try:
+                logger.info(f"[sendgrid] body={getattr(response, 'body', None)}")
+            except Exception:
+                pass
+        return response
     except Exception as e:
         logger.error(f"SendGrid email failed: {e}")
         raise  # Re-raise to be caught by main.py
