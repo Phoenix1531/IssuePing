@@ -1,6 +1,12 @@
 {
   "repos": [
-    { "name": "microsoft/TypeScript", "labels": ["good first issue"] },
-    { "name": "vercel/next.js", "labels": ["frontend", "hacktoberfest"] }
+    {
+      "name": "facebook/react",
+      "labels": ["good-first-issue"]
+    },
+    {
+      "name": "vercel/next.js",
+      "labels": ["frontend", "hacktoberfest"]
+    }
   ]
 }
